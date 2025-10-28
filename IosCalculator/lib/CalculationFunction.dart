@@ -4,7 +4,7 @@ String calculationFunction(String input){
   final Iterable<RegExpMatch> matches= regex.allMatches(americanInput);
   List<String> americanInputList = matches.map((m) => m.group(0)!).toList();
 
-  String result = '00';
+  String result = '000';
 
   for(String element in americanInputList){
     result += '$element ';
