@@ -18,7 +18,7 @@ class Grid extends StatelessWidget {
       children: <Widget>[
         Button.icon(iconData: Icons.backspace_outlined, buttonColor: Color(0xff717577),buttonType: ButtonType.delete,),
         Button.text(text: 'AC', buttonColor: Color(0xff717577), buttonType: ButtonType.deleteAll,),
-        Button.icon(iconData: CupertinoIcons.percent, buttonColor: Color(0xff717577), buttonType: ButtonType.doNothing,),
+        Button.icon(iconData: CupertinoIcons.percent, buttonColor: Color(0xff717577), buttonType: ButtonType.addData, buttonContent: '%',),
         Button.icon(iconData: CupertinoIcons.divide, buttonColor: Color(0xfffc8100), buttonType: ButtonType.addData, buttonContent: '÷',),
         Button.text(text: '7', buttonColor: Color(0xff454a4c), buttonType: ButtonType.addData, buttonContent: '7',),
         Button.text(text: '8', buttonColor: Color(0xff454a4c), buttonType: ButtonType.addData, buttonContent: '8',),
