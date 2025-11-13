@@ -8,8 +8,8 @@ class DisplayForecastDataState extends ForecastStates {
 }
 
 class DisplayForecastLoadingScreenState extends ForecastStates {
-  //final int citysToDisplayCount;
-  //DisplayForecastLoadingScreenState({required this.citysToDisplayCount});
+  final int citysToDisplayCount;
+  DisplayForecastLoadingScreenState({required this.citysToDisplayCount});
 }
 
 class DisplayForecastLoadingErrorState extends ForecastStates {}

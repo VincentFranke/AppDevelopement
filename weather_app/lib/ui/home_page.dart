@@ -25,21 +25,18 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocBuilder<ForecastBloc, ForecastStates>(
         builder: (context, state) {
-          //if(state is DisplayForecastDataState){
-          return ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: TestData.sevenDayForecastEntityList.length,
-            itemBuilder: (context, index) {
-              return SevenDayForecastView(
-                sevenDayForecastEntity:
-                    TestData.sevenDayForecastEntityList[index],
-              );
-            },
-          );
-          //}
-          //else if(state is DisplayForecastLoadingScreenState){
-
-          //}
+          if (state is DisplayForecastDataState) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: TestData.sevenDayForecastEntityList.length,
+              itemBuilder: (context, index) {
+                return SevenDayForecastView(
+                  sevenDayForecastEntity:
+                      TestData.sevenDayForecastEntityList[index],
+                );
+              },
+            );
+          } else if (state is DisplayForecastLoadingScreenState) {}
         },
       ),
     );
