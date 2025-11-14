@@ -8,11 +8,14 @@ class HiveCityDatabaseService {
     return _instance;
   }
 
-  void initialize() async {
-    _box = await Hive.openBox('cities');
+  Future<void> initialize() async {
+    _box = await Hive.openBox("cities");
   }
 
-  void addCity({required String name, required Map<String, dynamic> json}) async {
+  void addCity({
+    required String name,
+    required Map<String, dynamic> json,
+  }) async {
     _box.put(name, json);
   }
 
@@ -21,7 +24,11 @@ class HiveCityDatabaseService {
   }
 
   List<Map<String, dynamic>> getAllCitys() {
-    return _box.values.cast<Map<String, dynamic>>().toList();
+    return _box.values.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+  }
+
+  int getCityLength() {
+    return _box.values.length;
   }
 
   void deleteCity({required String name}) {

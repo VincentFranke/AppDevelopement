@@ -7,12 +7,16 @@ import 'package:weather_app/logic/entities/city_entity.dart';
 import 'package:weather_app/logic/entities/seven_day_forecast_entity.dart';
 
 class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
-  late final HiveCityDatabaseService hiveCityDatabaseService;
-  ForecastBloc() : super(DisplayForecastLoadingScreenState()) {
-    hiveCityDatabaseService = HiveCityDatabaseService();
-
+  final HiveCityDatabaseService hiveCityDatabaseService;
+  ForecastBloc()
+    : hiveCityDatabaseService = HiveCityDatabaseService(),
+      super(DisplayForecastPreLoadingScreenState()) {
     on<HomePageRefreshEvent>((event, emit) async {
-      emit(DisplayForecastLoadingScreenState());
+      emit(
+        DisplayForecastLoadingScreenState(
+          citysToDisplayCount: hiveCityDatabaseService.getCityLength(),
+        ),
+      );
       emit(
         DisplayForecastDataState(
           sevenDayForecastEntityList: await _getCurrentWeatherData(),
@@ -20,7 +24,11 @@ class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
       );
     });
     on<AddCityEvent>((event, emit) async {
-      emit(DisplayForecastLoadingScreenState());
+      emit(
+        DisplayForecastLoadingScreenState(
+          citysToDisplayCount: hiveCityDatabaseService.getCityLength(),
+        ),
+      );
       hiveCityDatabaseService.addCity(
         name: event.cityEntity.name!,
         json: event.cityEntity.toJson(),

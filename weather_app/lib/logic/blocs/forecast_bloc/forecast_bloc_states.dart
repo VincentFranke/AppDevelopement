@@ -12,4 +12,6 @@ class DisplayForecastLoadingScreenState extends ForecastStates {
   DisplayForecastLoadingScreenState({required this.citysToDisplayCount});
 }
 
+class DisplayForecastPreLoadingScreenState extends ForecastStates {}
+
 class DisplayForecastLoadingErrorState extends ForecastStates {}

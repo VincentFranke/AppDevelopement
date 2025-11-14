@@ -28,15 +28,28 @@ class HomePage extends StatelessWidget {
           if (state is DisplayForecastDataState) {
             return ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: TestData.sevenDayForecastEntityList.length,
+              itemCount: state.sevenDayForecastEntityList.length,
               itemBuilder: (context, index) {
                 return SevenDayForecastView(
                   sevenDayForecastEntity:
-                      TestData.sevenDayForecastEntityList[index],
+                      state.sevenDayForecastEntityList[index],
                 );
               },
             );
-          } else if (state is DisplayForecastLoadingScreenState) {}
+          } else if (state is DisplayForecastLoadingScreenState) {
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: state.citysToDisplayCount,
+              itemBuilder: (context, index) {
+                return SevenDayForecastView.shimmer();
+              },
+            );
+          } else if (state is DisplayForecastPreLoadingScreenState) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is DisplayForecastLoadingErrorState) {
+            return Center(child: Text('Error'));
+          }
+          return Center(child: Text('Error Invalid State'));
         },
       ),
     );
