@@ -29,7 +29,7 @@ class SevenDayForecastView extends StatelessWidget {
       sevenDayForecastEntity.header,
       style: Theme.of(context).textTheme.titleMedium,
     );
-    //final headerContentShimmer =
+    final headerContentShimmer =
 
     return Column(
       children: [
