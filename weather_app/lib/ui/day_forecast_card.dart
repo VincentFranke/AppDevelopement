@@ -10,10 +10,15 @@ class DayForecastCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Align(
             alignment: Alignment.topCenter,
             child: Text(dayForecastEntity.dayLabel.label),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text('${dayForecastEntity.temperature} °C'),
           ),
           Align(
             alignment: Alignment.center,
@@ -21,10 +26,6 @@ class DayForecastCard extends StatelessWidget {
               _getIcon(weatherCode: dayForecastEntity.weatherCode),
               size: 50,
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Text('${dayForecastEntity.temperature} °C'),
           ),
         ],
       ),
