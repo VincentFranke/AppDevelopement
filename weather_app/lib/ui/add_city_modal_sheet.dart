@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/city_suggestion_card_layout_config.dart';
 import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc.dart';
@@ -38,7 +39,9 @@ void showAddCityModalSheet({required BuildContext context}) {
                 TextField(
                   autofocus: true,
                   textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(labelText: 'Select City'),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.selectCity,
+                  ),
                   onChanged: (value) => currentInputBloc.add(
                     InputChangedEvent(currentInput: value),
                   ),

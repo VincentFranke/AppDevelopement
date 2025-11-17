@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/database/hive_city_database_service.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
 import 'package:weather_app/logic/day_label.dart';

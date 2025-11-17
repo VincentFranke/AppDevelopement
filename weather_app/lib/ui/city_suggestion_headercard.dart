@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/city_suggestion_card_layout_config.dart';
 
 class CitySuggestionHeadercard extends StatelessWidget {
@@ -21,15 +22,15 @@ class CitySuggestionHeadercard extends StatelessWidget {
           ),
           Expanded(
             flex: citySuggestionCardLayoutConfig.nameFlexValue,
-            child: Text('City'),
+            child: Text(AppLocalizations.of(context)!.city),
           ),
           Expanded(
             flex: citySuggestionCardLayoutConfig.federalStateFlexValue,
-            child: Text('Federal State'),
+            child: Text(AppLocalizations.of(context)!.federalState),
           ),
           Expanded(
             flex: citySuggestionCardLayoutConfig.countryFlexValue,
-            child: Text('Country'),
+            child: Text(AppLocalizations.of(context)!.country),
           ),
         ],
       ),
