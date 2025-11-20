@@ -284,6 +284,12 @@ abstract class AppLocalizations {
   /// **'Country'**
   String get country;
 
+  /// No description provided for @dayForecast.
+  ///
+  /// In en, this message translates to:
+  /// **'Day Forecast'**
+  String get dayForecast;
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:

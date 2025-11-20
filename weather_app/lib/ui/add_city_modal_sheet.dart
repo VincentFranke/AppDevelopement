@@ -9,9 +9,11 @@ import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc_st
 import 'package:weather_app/ui/city_suggestion_card.dart';
 import 'package:weather_app/ui/city_suggestion_headercard.dart';
 
-void showAddCityModalSheet({required BuildContext context}) {
-  final currentInputBloc = context.read<CurrentInputBloc>();
-  final forecastBloc = context.read<ForecastBloc>();
+void showAddCityModalSheet({
+  required BuildContext context,
+  required CurrentInputBloc currentInputBloc,
+  required ForecastBloc forecastBloc,
+}) {
   final citySuggestionCardLayoutConfig = CitySuggestionCardLayoutConfig(
     padding: 5,
     countryCodeFlexValue: 1,
@@ -25,7 +27,7 @@ void showAddCityModalSheet({required BuildContext context}) {
     backgroundColor: Colors.red,
     context: context,
     builder: (context) {
-      return BlocProvider<CurrentInputBloc>.value(
+      return BlocProvider.value(
         value: currentInputBloc,
         child: Padding(
           padding: EdgeInsetsGeometry.only(

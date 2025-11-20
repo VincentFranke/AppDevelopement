@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/database/hive_city_database_service.dart';
-import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
 import 'package:weather_app/logic/day_label.dart';
@@ -8,11 +7,12 @@ import 'package:weather_app/logic/entities/day_forecast_entity.dart';
 import 'package:weather_app/logic/entities/seven_day_forecast_entity.dart';
 import 'package:weather_app/ui/day_forecast_card.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:weather_app/ui/detailed_day_forecast_screen.dart';
 
 class SevenDayForecastView extends StatelessWidget {
   final SevenDayForecastEntity sevenDayForecastEntity;
-  final bool shimmer;
   final ForecastBloc forecastBloc;
+  final bool shimmer;
   const SevenDayForecastView({
     super.key,
     required this.sevenDayForecastEntity,
@@ -53,6 +53,26 @@ class SevenDayForecastView extends StatelessWidget {
                       Text(
                         sevenDayForecastEntity.header,
                         style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      Expanded(
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) {
+                                    return DetailedDayForecastScreen(
+                                      header: sevenDayForecastEntity.header,
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.area_chart),
+                          ),
+                        ),
                       ),
                       IconButton(
                         onPressed: () {

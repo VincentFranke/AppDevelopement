@@ -19,7 +19,7 @@ class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
       );
       emit(
         DisplayForecastDataState(
-          sevenDayForecastEntityList: await _getCurrentWeatherData(),
+          sevenDayForecastEntityList: await _getCurrentSevenDayForecastData(),
         ),
       );
     });
@@ -35,13 +35,13 @@ class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
       );
       emit(
         DisplayForecastDataState(
-          sevenDayForecastEntityList: await _getCurrentWeatherData(),
+          sevenDayForecastEntityList: await _getCurrentSevenDayForecastData(),
         ),
       );
     });
   }
 
-  Future<List<SevenDayForecastEntity>> _getCurrentWeatherData() async {
+  Future<List<SevenDayForecastEntity>> _getCurrentSevenDayForecastData() async {
     final List<Map<String, dynamic>> citysJson = hiveCityDatabaseService
         .getAllCitys();
     final List<CityEntity> cities = [];

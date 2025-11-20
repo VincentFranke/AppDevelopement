@@ -20,7 +20,7 @@ class HiveCityDatabaseService {
   }
 
   Map<String, dynamic> getCity({required String name}) {
-    return _box.get(name);
+    return Map<String, dynamic>.from(_box.get(name));
   }
 
   List<Map<String, dynamic>> getAllCitys() {

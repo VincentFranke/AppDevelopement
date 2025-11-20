@@ -102,6 +102,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get country => 'Country';
 
   @override
+  String get dayForecast => 'Day Forecast';
+
+  @override
   String get error => 'Error';
 
   @override

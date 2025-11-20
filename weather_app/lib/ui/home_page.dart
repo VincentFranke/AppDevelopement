@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
+import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_states.dart';
@@ -13,13 +14,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final forecastBloc = context.read<ForecastBloc>();
+    final currentInputBloc = context.read<CurrentInputBloc>();
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.title),
         actions: [
           IconButton(
             iconSize: 50,
-            onPressed: () => showAddCityModalSheet(context: context),
+            onPressed: () => showAddCityModalSheet(
+              context: context,
+              currentInputBloc: currentInputBloc,
+              forecastBloc: forecastBloc,
+            ),
             icon: Icon(Icons.add),
           ),
         ],

@@ -30,6 +30,7 @@
   "code99": "Gewitter mit starkem Hagel",
   "codeUnknown": "Unbekanntes Wetter handle mit Bedacht!",
   "country": "Land",
+  "dayForecast": "Tagesprogrognose",
   "error": "Error",
   "errorInvalidState": "Error invalider Status",
   "federalState": "Bundesland",

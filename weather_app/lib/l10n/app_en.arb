@@ -30,6 +30,7 @@
   "code99": "Thunderstorm with heavy hail",
   "codeUnknown": "Unknown weather tread carefully!",
   "country": "Country",
+  "dayForecast": "Day Forecast",
   "error": "Error",
   "errorInvalidState": "Error invalid state",
   "federalState": "Federal State",

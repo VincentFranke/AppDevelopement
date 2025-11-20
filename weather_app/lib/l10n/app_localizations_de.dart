@@ -102,6 +102,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get country => 'Land';
 
   @override
+  String get dayForecast => 'Tagesprogrognose';
+
+  @override
   String get error => 'Error';
 
   @override
