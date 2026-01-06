@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:weather_app/logic/entities/day_forecast_entity.dart';
+import 'package:weather_app/logic/entities/detailed_day_forecast_entity.dart';
 import 'package:weather_app/logic/entities/hourly_forecast_entity.dart';
 import 'package:weather_app/logic/entities/seven_day_forecast_entity.dart';
 
@@ -25,23 +26,25 @@ Future<List<SevenDayForecastEntity>> fetchSevenDayForecastList(
   return result;
 }
 
-Future<List<HourlyForecastEntity>> fetchHourlyForecastList({
+Future<DetailedDayForecastEntity> fetchDetailedDayForecastEntity({
   required String name,
   required double lat,
   required double lon,
 }) async {
+  List<HourlyForecastEntity> hourlyForecastEntityList =
+      await _fetchHourlyForecastList(name: name, lat: lat, lon: lon);
+
   final url = Uri.parse(
-    'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&hourly=temperature_2m,weather_code&forecast_days=1',
+    'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&daily=sunrise,sunset&timezone=auto&forecast_days=1',
   );
+
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
     final apiResponse = json.decode(response.body) as Map<String, dynamic>;
-
-    return List.generate(
-      apiResponse['hourly']['time'].length,
-      (index) =>
-          HourlyForecastEntity.fromJson(jsonData: apiResponse, index: index),
+    return DetailedDayForecastEntity.fromJson(
+      hourlyForecastEntityList: hourlyForecastEntityList,
+      jsonData: apiResponse,
     );
   }
   throw HttpException("HTTP-Request failed", uri: url);
@@ -63,6 +66,28 @@ Future<List<DayForecastEntity>> _fetchDayForecastList(
       apiResponse['daily']['time'].length,
       (index) =>
           DayForecastEntity.fromJson(jsonData: apiResponse, index: index),
+    );
+  }
+  throw HttpException("HTTP-Request failed", uri: url);
+}
+
+Future<List<HourlyForecastEntity>> _fetchHourlyForecastList({
+  required String name,
+  required double lat,
+  required double lon,
+}) async {
+  final url = Uri.parse(
+    'https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&hourly=temperature_2m,weather_code&timezone=auto&forecast_days=1',
+  );
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final apiResponse = json.decode(response.body) as Map<String, dynamic>;
+
+    return List.generate(
+      apiResponse['hourly']['time'].length,
+      (index) =>
+          HourlyForecastEntity.fromJson(jsonData: apiResponse, index: index),
     );
   }
   throw HttpException("HTTP-Request failed", uri: url);

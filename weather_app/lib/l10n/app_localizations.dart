@@ -338,6 +338,18 @@ abstract class AppLocalizations {
   /// **'sunday'**
   String get sunday;
 
+  /// No description provided for @sunrise.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get sunrise;
+
+  /// No description provided for @sunset.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset'**
+  String get sunset;
+
   /// No description provided for @thursday.
   ///
   /// In en, this message translates to:

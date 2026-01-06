@@ -5,7 +5,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_app/database/hive_city_database_service.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc.dart';
-import 'package:weather_app/logic/blocs/detailed_bloc/detailed_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
 import 'package:weather_app/ui/home_page.dart';

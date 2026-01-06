@@ -4,7 +4,7 @@ import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/detailed_bloc/detailed_bloc.dart';
 import 'package:weather_app/logic/blocs/detailed_bloc/detailed_bloc_events.dart';
 import 'package:weather_app/logic/blocs/detailed_bloc/detailed_bloc_states.dart';
-import 'package:weather_app/ui/line_chart_temp.dart';
+import 'package:weather_app/ui/line_chart/line_chart.dart';
 import 'package:weather_app/ui/reusable/shimmer_wrapper.dart';
 
 class DetailedDayForecastScreen extends StatelessWidget {
@@ -28,20 +28,18 @@ class DetailedDayForecastScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Expanded(
+                  Flexible(
                     child: ShimmerWrapper(
                       applyShimmer:
                           detailedBlocState is LoadingDetailedBlocState,
                       skeleton: (child) {
-                        return SizedBox.expand(
-                          child: ColoredBox(color: Colors.grey, child: child),
-                        );
+                        return ColoredBox(color: Colors.grey, child: child);
                       },
                       childToShowWhenNoShimmer:
                           detailedBlocState is ShowDataDetailedBlocState
-                          ? LinechartTemp(
-                              hourlyForecastEntityList:
-                                  detailedBlocState.hourlyForecastEntityList,
+                          ? Linechart(
+                              detailedDayForecastEntity:
+                                  detailedBlocState.detailedDayForecastEntity,
                             )
                           : null,
                     ),

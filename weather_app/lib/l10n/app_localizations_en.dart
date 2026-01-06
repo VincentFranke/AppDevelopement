@@ -129,6 +129,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sunday => 'sunday';
 
   @override
+  String get sunrise => 'Sunrise';
+
+  @override
+  String get sunset => 'Sunset';
+
+  @override
   String get thursday => 'Thursday';
 
   @override

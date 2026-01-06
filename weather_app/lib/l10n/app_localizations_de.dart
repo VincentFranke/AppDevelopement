@@ -129,6 +129,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sunday => 'Sonntag';
 
   @override
+  String get sunrise => 'Sonnenaufgang';
+
+  @override
+  String get sunset => 'Sonnenuntergang';
+
+  @override
   String get thursday => 'Donnerstag';
 
   @override

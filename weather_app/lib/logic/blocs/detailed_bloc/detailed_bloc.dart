@@ -13,7 +13,7 @@ class DetailedBloc extends Bloc<DetailedBlocEvents, DetailedBlocStates> {
       final cityToDisplay = CityEntity.fromJson(
         jsonData: HiveCityDatabaseService().getCity(name: event.header),
       );
-      final hourlyForecastEntityList = await fetchHourlyForecastList(
+      final detailedDayForecastEntity = await fetchDetailedDayForecastEntity(
         name: cityToDisplay.name!,
         lat: cityToDisplay.lat!,
         lon: cityToDisplay.lon!,
@@ -21,7 +21,7 @@ class DetailedBloc extends Bloc<DetailedBlocEvents, DetailedBlocStates> {
 
       emit(
         ShowDataDetailedBlocState(
-          hourlyForecastEntityList: hourlyForecastEntityList,
+          detailedDayForecastEntity: detailedDayForecastEntity,
         ),
       );
     });
