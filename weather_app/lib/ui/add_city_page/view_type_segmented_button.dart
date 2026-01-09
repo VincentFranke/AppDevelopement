@@ -44,6 +44,7 @@ class ViewTypeSegmentedButton extends StatelessWidget {
                 viewType: newViewType.first,
               ),
             );
+            // Test
           },
         ),
       ),
