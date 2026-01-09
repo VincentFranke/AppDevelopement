@@ -290,6 +290,12 @@ abstract class AppLocalizations {
   /// **'Day Forecast'**
   String get dayForecast;
 
+  /// No description provided for @dayView.
+  ///
+  /// In en, this message translates to:
+  /// **'Day View'**
+  String get dayView;
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
@@ -373,6 +379,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'wednesday'**
   String get wednesday;
+
+  /// No description provided for @weekView.
+  ///
+  /// In en, this message translates to:
+  /// **'Week View'**
+  String get weekView;
 }
 
 class _AppLocalizationsDelegate

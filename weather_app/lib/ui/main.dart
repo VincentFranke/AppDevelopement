@@ -7,6 +7,7 @@ import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
+import 'package:weather_app/logic/blocs/view_type_bloc/view_type_bloc.dart';
 import 'package:weather_app/ui/home_page.dart';
 import 'package:weather_app/ui/themes/dark_theme.dart';
 import 'package:weather_app/ui/themes/light_theme.dart';
@@ -40,6 +41,7 @@ class WeatherApp extends StatelessWidget {
             create: (context) => ForecastBloc()..add(HomePageRefreshEvent()),
           ),
           BlocProvider(create: (context) => CurrentInputBloc()),
+          BlocProvider(create: (context) => ViewTypeBloc()),
         ],
         child: HomePage(),
       ),

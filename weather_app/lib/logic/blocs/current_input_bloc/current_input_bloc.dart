@@ -6,13 +6,20 @@ import 'package:weather_app/logic/entities/city_entity.dart';
 
 class CurrentInputBloc
     extends Bloc<CurrentInputBlocEvents, CurrentInputBlocState> {
-  CurrentInputBloc() : super(CurrentInputBlocState(citySuggestions: [])) {
-    on<InputChangedEvent>((event, emit) async {
+  CurrentInputBloc()
+    : super(CurrentInputBlocState(citySuggestions: [], currentInput: '')) {
+    on<CurrentInputChangedEvent>((event, emit) async {
       final List<CityEntity> result = await fetchCitySuggestions(
-        event.currentInput,
+        currentInput: event.currentInput,
+        viewType: event.viewType,
       );
 
-      emit(CurrentInputBlocState(citySuggestions: result));
+      emit(
+        CurrentInputBlocState(
+          citySuggestions: result,
+          currentInput: event.currentInput,
+        ),
+      );
     });
   }
 }

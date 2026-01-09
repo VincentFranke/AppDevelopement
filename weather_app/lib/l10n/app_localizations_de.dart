@@ -105,6 +105,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get dayForecast => 'Tagesprogrognose';
 
   @override
+  String get dayView => 'Tagesansicht';
+
+  @override
   String get error => 'Error';
 
   @override
@@ -145,4 +148,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get wednesday => 'Mittwoch';
+
+  @override
+  String get weekView => 'Wochenansicht';
 }

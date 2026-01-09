@@ -105,6 +105,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dayForecast => 'Day Forecast';
 
   @override
+  String get dayView => 'Day View';
+
+  @override
   String get error => 'Error';
 
   @override
@@ -145,4 +148,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get wednesday => 'wednesday';
+
+  @override
+  String get weekView => 'Week View';
 }

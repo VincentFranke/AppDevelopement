@@ -1,28 +1,26 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
-import 'package:weather_app/logic/entities/detailed_day_forecast_entity.dart';
+import 'package:weather_app/logic/entities/day_forecast_entity.dart';
 import 'package:weather_app/logic/mapper.dart';
-import 'package:weather_app/ui/line_chart/axis_label.dart';
-import 'package:weather_app/ui/line_chart/coordinate_calculator.dart';
-import 'package:weather_app/ui/line_chart/chart_marker.dart';
+import 'package:weather_app/ui/day_forecast_line_chart/axis_label.dart';
+import 'package:weather_app/ui/day_forecast_line_chart/coordinate_calculator.dart';
+import 'package:weather_app/ui/day_forecast_line_chart/chart_marker.dart';
 import 'package:weather_app/ui/reusable/positioned_widget.dart';
 
-class Linechart extends StatelessWidget {
-  final DetailedDayForecastEntity detailedDayForecastEntity;
+class DayForecastLineChartBody extends StatelessWidget {
+  final DayForecastEntity dayEntity;
   late final int minY;
   late final int maxY;
   final int minX = -1;
   final int maxX = 24;
-  Linechart({super.key, required this.detailedDayForecastEntity}) {
+  DayForecastLineChartBody({super.key, required this.dayEntity}) {
     minY = CoordinateCalculator.calculateMinY(
-      hourlyForecastEntityList:
-          detailedDayForecastEntity.hourlyForecastEntityList,
+      hourlyForecastEntityList: dayEntity.hourlyForecastEntityList,
       extraSpace: 1,
     );
     maxY = CoordinateCalculator.calculateMaxY(
-      hourlyForecastEntityList:
-          detailedDayForecastEntity.hourlyForecastEntityList,
+      hourlyForecastEntityList: dayEntity.hourlyForecastEntityList,
       extraSpace: 4,
     );
   }
@@ -85,15 +83,14 @@ class Linechart extends StatelessWidget {
                                 isCurved: true,
                                 barWidth: 10,
                                 color: Colors.red,
-                                spots: detailedDayForecastEntity
-                                    .hourlyForecastEntityList
-                                    .map((e) {
-                                      return FlSpot(
-                                        e.time.hour.toDouble(),
-                                        e.temperature,
-                                      );
-                                    })
-                                    .toList(),
+                                spots: dayEntity.hourlyForecastEntityList.map((
+                                  e,
+                                ) {
+                                  return FlSpot(
+                                    e.time.hour.toDouble(),
+                                    e.temperature,
+                                  );
+                                }).toList(),
                                 belowBarData: BarAreaData(
                                   show: true,
                                   color: Colors.red.withValues(alpha: 0.3),
@@ -106,8 +103,8 @@ class Linechart extends StatelessWidget {
                         // Sunrise
                         ChartMarker(
                           text: AppLocalizations.of(context)!.sunrise,
-                          detailedDayForecastEntity: detailedDayForecastEntity,
-                          targetTime: detailedDayForecastEntity.sunrise,
+                          dayForecastEntity: dayEntity,
+                          targetTime: dayEntity.sunrise,
                           chartHeight: chartHeight,
                           chartWidth: chartWidth,
                           minX: minX,
@@ -119,8 +116,8 @@ class Linechart extends StatelessWidget {
                         // Sunset
                         ChartMarker(
                           text: AppLocalizations.of(context)!.sunset,
-                          detailedDayForecastEntity: detailedDayForecastEntity,
-                          targetTime: detailedDayForecastEntity.sunset,
+                          dayForecastEntity: dayEntity,
+                          targetTime: dayEntity.sunset,
                           chartHeight: chartHeight,
                           chartWidth: chartWidth,
                           minX: minX,
@@ -130,9 +127,7 @@ class Linechart extends StatelessWidget {
                         ),
 
                         // Icon-Graph
-                        ...detailedDayForecastEntity.hourlyForecastEntityList.map((
-                          entity,
-                        ) {
+                        ...dayEntity.hourlyForecastEntityList.map((entity) {
                           return PositionedWidget(
                             x: CoordinateCalculator.calculateXPositionInChartInPixel(
                               xInChartFormat: entity.time.hour.toDouble(),

@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
-import 'package:weather_app/logic/day_label.dart';
+import 'package:weather_app/logic/day_label_enum.dart';
 import 'package:weather_icons/weather_icons.dart';
 
 class Mapper {
   static String getLocalizedLabel({
-    required DayLabel label,
+    required DayLabelEnum label,
     required AppLocalizations loc,
   }) {
     switch (label) {
-      case DayLabel.monday:
+      case DayLabelEnum.monday:
         return loc.monday;
-      case DayLabel.tuesday:
+      case DayLabelEnum.tuesday:
         return loc.tuesday;
-      case DayLabel.wednesday:
+      case DayLabelEnum.wednesday:
         return loc.wednesday;
-      case DayLabel.thursday:
+      case DayLabelEnum.thursday:
         return loc.thursday;
-      case DayLabel.friday:
+      case DayLabelEnum.friday:
         return loc.friday;
-      case DayLabel.saturday:
+      case DayLabelEnum.saturday:
         return loc.saturday;
-      case DayLabel.sunday:
+      case DayLabelEnum.sunday:
         return loc.sunday;
     }
   }

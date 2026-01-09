@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/logic/entities/detailed_day_forecast_entity.dart';
-import 'package:weather_app/ui/line_chart/coordinate_calculator.dart';
+import 'package:weather_app/logic/entities/day_forecast_entity.dart';
+import 'package:weather_app/ui/day_forecast_line_chart/coordinate_calculator.dart';
 import 'package:weather_app/ui/reusable/positioned_widget.dart';
 import 'package:weather_app/ui/reusable/line_painter.dart';
 import 'package:weather_app/ui/reusable/triangle_painter.dart';
 
 class ChartMarker extends StatelessWidget {
   final String text;
-  final DetailedDayForecastEntity detailedDayForecastEntity;
+  final DayForecastEntity dayForecastEntity;
   final DateTime targetTime;
   final double chartWidth;
   final double chartHeight;
@@ -23,7 +23,7 @@ class ChartMarker extends StatelessWidget {
   ChartMarker({
     super.key,
     required this.text,
-    required this.detailedDayForecastEntity,
+    required this.dayForecastEntity,
     required this.targetTime,
     required this.chartHeight,
     required this.chartWidth,
@@ -43,7 +43,7 @@ class ChartMarker extends StatelessWidget {
 
     final double yInPixelFormat =
         CoordinateCalculator.calculateYPositionInChartInPixel(
-          xInChartFormat: detailedDayForecastEntity
+          xInChartFormat: dayForecastEntity
               .hourlyForecastEntityList[xInChartFormat.round()]
               .temperature,
           minY: minY,
@@ -62,11 +62,11 @@ class ChartMarker extends StatelessWidget {
       xInPixelFormat,
       CoordinateCalculator.calculateYPositionInChartInPixel(
             xInChartFormat:
-                (detailedDayForecastEntity.hourlyForecastEntityList
+                (dayForecastEntity.hourlyForecastEntityList
                         .where((e) => e.time.hour == targetTime.hour)
                         .first
                         .temperature +
-                    detailedDayForecastEntity.hourlyForecastEntityList
+                    dayForecastEntity.hourlyForecastEntityList
                         .where((e) => e.time.hour == targetTime.hour + 1)
                         .first
                         .temperature) /

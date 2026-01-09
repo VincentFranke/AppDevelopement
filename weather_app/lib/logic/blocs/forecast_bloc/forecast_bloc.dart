@@ -4,7 +4,9 @@ import 'package:weather_app/database/weather_api_client.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_states.dart';
 import 'package:weather_app/logic/entities/city_entity.dart';
-import 'package:weather_app/logic/entities/seven_day_forecast_entity.dart';
+import 'package:weather_app/logic/entities/day_forecast_entity.dart';
+import 'package:weather_app/logic/entities/week_forecast_entity.dart';
+import 'package:weather_app/logic/view_type.dart';
 
 class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
   final HiveCityDatabaseService hiveCityDatabaseService;
@@ -14,46 +16,76 @@ class ForecastBloc extends Bloc<ForecastBlocEvent, ForecastStates> {
     on<HomePageRefreshEvent>((event, emit) async {
       emit(
         DisplayForecastLoadingScreenState(
-          citysToDisplayCount: hiveCityDatabaseService.getCityLength(),
+          numberOfCitiesDesignatedForWeekView: hiveCityDatabaseService
+              .getNumberOfCitiesDesignatedForWeekView(),
+          numberOfCitiesDesignatedForDayView: hiveCityDatabaseService
+              .getNumberOfCitiesDesignatedForDayView(),
         ),
       );
       emit(
         DisplayForecastDataState(
-          sevenDayForecastEntityList: await _getCurrentSevenDayForecastData(),
+          weekForecastEntityList: await _getCurrentWeekForecastData(),
+          dayForecastEntityList: await _getCurrentDayForecastData(),
         ),
       );
     });
     on<AddCityEvent>((event, emit) async {
       emit(
         DisplayForecastLoadingScreenState(
-          citysToDisplayCount: hiveCityDatabaseService.getCityLength(),
+          numberOfCitiesDesignatedForWeekView: hiveCityDatabaseService
+              .getNumberOfCitiesDesignatedForWeekView(),
+          numberOfCitiesDesignatedForDayView: hiveCityDatabaseService
+              .getNumberOfCitiesDesignatedForDayView(),
         ),
       );
+      //event.cityEntity.viewType = event.viewType; // Muss aktualisiert werden, da in einem Spezialfall (Plus-Zeichen wird gedrückt ohne dass etwas eingegeben wird) die alten Entities recycelt werden und jene noch den alten ViewType haben
+      // Ggf. woanders hinschreiben oder den State vom ViewType durch einen Bloc speichern o.Ä.
       hiveCityDatabaseService.addCity(
         name: event.cityEntity.name!,
         json: event.cityEntity.toJson(),
       );
       emit(
         DisplayForecastDataState(
-          sevenDayForecastEntityList: await _getCurrentSevenDayForecastData(),
+          weekForecastEntityList: await _getCurrentWeekForecastData(),
+          dayForecastEntityList: await _getCurrentDayForecastData(),
         ),
       );
     });
   }
 
-  Future<List<SevenDayForecastEntity>> _getCurrentSevenDayForecastData() async {
-    final List<Map<String, dynamic>> citysJson = hiveCityDatabaseService
-        .getAllCitys();
-    final List<CityEntity> cities = [];
+  Future<List<WeekForecastEntity>> _getCurrentWeekForecastData() async {
+    final List<CityEntity> citys = hiveCityDatabaseService.getAllCitys();
+    final List<CityEntity> citiesDesignatedForWeekView = [];
 
-    for (Map<String, dynamic> cityJson in citysJson) {
-      cities.add(CityEntity.fromJson(jsonData: cityJson));
+    for (CityEntity city in citys) {
+      if (city.viewType == ViewType.weekView) {
+        citiesDesignatedForWeekView.add(city);
+      }
     }
 
-    return fetchSevenDayForecastList(
-      cities.map((c) => c.name!).toList(),
-      cities.map((c) => c.lat!).toList(),
-      cities.map((c) => c.lon!).toList(),
+    return fetchWeekForecastEntityList(
+      names: citiesDesignatedForWeekView.map((c) => c.name!).toList(),
+      ids: citiesDesignatedForWeekView.map((c) => c.id!).toList(),
+      lats: citiesDesignatedForWeekView.map((c) => c.lat!).toList(),
+      lons: citiesDesignatedForWeekView.map((c) => c.lon!).toList(),
+    );
+  }
+
+  Future<List<DayForecastEntity>> _getCurrentDayForecastData() async {
+    final List<CityEntity> citys = hiveCityDatabaseService.getAllCitys();
+    final List<CityEntity> citiesDesignatedForDayView = [];
+
+    for (CityEntity city in citys) {
+      if (city.viewType == ViewType.dayView) {
+        citiesDesignatedForDayView.add(city);
+      }
+    }
+
+    return fetchDayForecastList(
+      ids: citiesDesignatedForDayView.map((c) => c.id!).toList(),
+      names: citiesDesignatedForDayView.map((c) => c.name!).toList(),
+      lats: citiesDesignatedForDayView.map((c) => c.lat!).toList(),
+      lons: citiesDesignatedForDayView.map((c) => c.lon!).toList(),
     );
   }
 }

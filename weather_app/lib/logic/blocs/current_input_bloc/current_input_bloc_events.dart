@@ -1,6 +1,12 @@
+import 'package:weather_app/logic/view_type.dart';
+
 abstract class CurrentInputBlocEvents {}
 
-class InputChangedEvent extends CurrentInputBlocEvents {
+class CurrentInputChangedEvent extends CurrentInputBlocEvents {
   final String currentInput;
-  InputChangedEvent({required this.currentInput});
+  final ViewType viewType;
+  CurrentInputChangedEvent({
+    required this.currentInput,
+    required this.viewType,
+  });
 }

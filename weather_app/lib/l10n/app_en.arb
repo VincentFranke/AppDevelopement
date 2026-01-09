@@ -31,6 +31,7 @@
   "codeUnknown": "Unknown weather tread carefully!",
   "country": "Country",
   "dayForecast": "Day Forecast",
+  "dayView": "Day View",
   "error": "Error",
   "errorInvalidState": "Error invalid state",
   "federalState": "Federal State",
@@ -44,5 +45,6 @@
   "thursday": "Thursday",
   "title": "Weather App",
   "tuesday": "Tuesday",
-  "wednesday": "wednesday"
+  "wednesday": "wednesday",
+  "weekView": "Week View"
 }

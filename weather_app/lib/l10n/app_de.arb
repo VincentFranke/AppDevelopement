@@ -31,6 +31,7 @@
   "codeUnknown": "Unbekanntes Wetter handle mit Bedacht!",
   "country": "Land",
   "dayForecast": "Tagesprogrognose",
+  "dayView": "Tagesansicht",
   "error": "Error",
   "errorInvalidState": "Error invalider Status",
   "federalState": "Bundesland",
@@ -44,5 +45,6 @@
   "thursday": "Donnerstag",
   "title": "Wetter App",
   "tuesday": "Dienstag",
-  "wednesday": "Mittwoch"
+  "wednesday": "Mittwoch",
+  "weekView": "Wochenansicht"
 }
