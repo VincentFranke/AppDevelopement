@@ -3,10 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:weather_app/database/hive_city_database_service.dart';
+import 'package:weather_app/database/shared_preferences_service.dart';
 import 'package:weather_app/l10n/app_localizations.dart';
 import 'package:weather_app/logic/blocs/current_input_bloc/current_input_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc.dart';
 import 'package:weather_app/logic/blocs/forecast_bloc/forecast_bloc_events.dart';
+import 'package:weather_app/logic/blocs/get_location_bloc/get_location_bloc.dart';
+import 'package:weather_app/logic/blocs/settings_bloc/settings_bloc.dart';
 import 'package:weather_app/logic/blocs/view_type_bloc/view_type_bloc.dart';
 import 'package:weather_app/ui/home_page.dart';
 import 'package:weather_app/ui/themes/dark_theme.dart';
@@ -16,7 +19,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await HiveCityDatabaseService().initialize();
-  //HiveCityDatabaseService().clear();
+  await SharedPreferencesService().initialize();
   runApp(const WeatherApp());
 }
 
@@ -42,6 +45,8 @@ class WeatherApp extends StatelessWidget {
           ),
           BlocProvider(create: (context) => CurrentInputBloc()),
           BlocProvider(create: (context) => ViewTypeBloc()),
+          BlocProvider(create: (context) => GetLocationBloc()),
+          BlocProvider(create: (context) => SettingsBloc()),
         ],
         child: HomePage(),
       ),

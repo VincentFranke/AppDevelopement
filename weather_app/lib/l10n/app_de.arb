@@ -36,6 +36,7 @@
   "errorInvalidState": "Error invalider Status",
   "federalState": "Bundesland",
   "friday": "Freitag",
+  "locationLoadingMessage": "Ermittle Standort",
   "monday": "Montag",
   "saturday": "Samstag",
   "selectCity": "Stadt auswählen",

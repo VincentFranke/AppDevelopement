@@ -120,6 +120,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get friday => 'Freitag';
 
   @override
+  String get locationLoadingMessage => 'Ermittle Standort';
+
+  @override
   String get monday => 'Montag';
 
   @override

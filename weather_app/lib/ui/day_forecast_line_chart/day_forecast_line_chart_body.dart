@@ -93,15 +93,7 @@ class DayForecastLineChartBody extends StatelessWidget {
                                 }).toList(),
                                 belowBarData: BarAreaData(
                                   show: true,
-                                  gradient: LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.red.withValues(alpha: 0.3),
-                                      Colors.blue.withValues(alpha: 0.3),
-                                    ],
-                                    stops: [0, 0.5],
-                                  ),
+                                  color: Colors.red.withValues(alpha: 0.3),
                                 ),
                               ),
                             ],

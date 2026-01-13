@@ -36,6 +36,7 @@
   "errorInvalidState": "Error invalid state",
   "federalState": "Federal State",
   "friday": "Friday",
+  "locationLoadingMessage": "Finding Your Location",
   "monday": "Monday",
   "saturday": "Saturday",
   "selectCity": "Select City",

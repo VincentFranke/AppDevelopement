@@ -48,6 +48,4 @@ class HiveCityDatabaseService {
   void clear() {
     _box.clear();
   }
-
-  // Main Branch
 }

@@ -320,6 +320,12 @@ abstract class AppLocalizations {
   /// **'Friday'**
   String get friday;
 
+  /// No description provided for @locationLoadingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Finding Your Location'**
+  String get locationLoadingMessage;
+
   /// No description provided for @monday.
   ///
   /// In en, this message translates to:

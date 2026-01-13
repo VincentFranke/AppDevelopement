@@ -9,7 +9,7 @@ class CurrentInputBloc
   CurrentInputBloc()
     : super(CurrentInputBlocState(citySuggestions: [], currentInput: '')) {
     on<CurrentInputChangedEvent>((event, emit) async {
-      final List<CityEntity> result = await fetchCitySuggestions(
+      final List<CityEntity> result = await fetchFiveCitySuggestions(
         currentInput: event.currentInput,
         viewType: event.viewType,
       );
