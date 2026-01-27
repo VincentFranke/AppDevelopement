@@ -8,7 +8,7 @@
             "name": "weather_app",
             "request": "launch",
             "type": "dart",
-            "program": "lib/ui/main.dart",
+            "program": "lib/main.dart",
         },
         {
             "name": "weather_app (profile mode)",

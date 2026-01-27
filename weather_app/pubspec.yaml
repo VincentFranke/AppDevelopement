@@ -24,6 +24,9 @@ dependencies:
   fl_chart: ^1.1.1
   location: ^8.0.1
   shared_preferences: ^2.5.4
+  timezone: ^0.10.1
+  dart_either: ^2.0.0
+  get_it: ^9.2.0
 
 dev_dependencies:
   flutter_test:
