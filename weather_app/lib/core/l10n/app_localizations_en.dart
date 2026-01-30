@@ -12,6 +12,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get city => 'City';
 
   @override
+  String get cityWasAdded => 'City Was Added';
+
+  @override
   String get code0 => 'Clear sky';
 
   @override

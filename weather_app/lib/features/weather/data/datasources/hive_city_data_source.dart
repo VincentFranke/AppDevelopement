@@ -1,19 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:weather_app/features/weather/domain/entities/city.dart';
-import 'package:weather_app/core/enums/view_type.dart';
+import 'package:weather_app/features/weather/data/models/city_model.dart';
 import 'package:weather_app/core/error/exceptions.dart';
 
 abstract interface class HiveCityDataSource {
   Future<void> initialize();
 
-  Future<void> addCity({
-    required String name,
+  Future<void> saveCity({
+    required String id,
     required Map<String, dynamic> internalJson,
   });
 
-  List<City> getAllCitysDayView();
-
-  List<City> gettAllCitysWeekView();
+  List<CityModel> getAllCities();
 
   int getCitiesForDayViewLength();
 
@@ -33,63 +30,56 @@ class HiveCityDataSourceImpl implements HiveCityDataSource {
   }
 
   @override
-  Future<void> addCity({
-    required String name,
+  Future<void> saveCity({
+    required String id,
     required Map<String, dynamic> internalJson,
   }) async {
-    name = '$name${internalJson['viewType']}';
-    if (_box.containsKey(name)) {
+    id = '$id${internalJson['viewType']}';
+    if (_box.containsKey(id)) {
       throw DataSourceException(message: 'City already exists');
     }
-    _box.put(name, internalJson);
+    _box.put(id, internalJson);
     return;
   }
 
   @override
-  List<City> getAllCitysDayView() {
-    final List<City> cities = [];
-    final List<City> res = [];
+  List<CityModel> getAllCities() {
+    final List<CityModel> res = [];
     final iteratorKeys = _box.keys.iterator;
     final iteratorValues = _box.values.iterator;
 
     while (iteratorKeys.moveNext() && iteratorValues.moveNext()) {
       final json = Map<String, dynamic>.from(iteratorValues.current as Map);
-      cities.add(
-        City.fromInternalJson(jsonData: json, id: iteratorKeys.current),
+      res.add(
+        CityModel.fromInternalJson(jsonData: json, id: iteratorKeys.current),
       );
-    }
-
-    for (City city in cities) {
-      if (city.viewType == ViewType.dayView) {
-        res.add(city);
-      }
     }
 
     return res;
   }
 
-  @override
-  List<City> gettAllCitysWeekView() {
-    final List<City> cities = [];
-    final List<City> res = [];
-    final iteratorKeys = _box.keys.iterator;
-    final iteratorValues = _box.values.iterator;
+  // @override
+  // List<CityModel> gettAllCitysWeekView() {
+  //   final List<CityModel> cities = [];
+  //   final List<CityModel> res = [];
+  //   final iteratorKeys = _box.keys.iterator;
+  //   final iteratorValues = _box.values.iterator;
 
-    while (iteratorKeys.moveNext() && iteratorValues.moveNext()) {
-      final json = Map<String, dynamic>.from(iteratorValues.current as Map);
-      cities.add(
-        City.fromInternalJson(jsonData: json, id: iteratorKeys.current),
-      );
-    }
+  //   while (iteratorKeys.moveNext() && iteratorValues.moveNext()) {
+  //     final json = Map<String, dynamic>.from(iteratorValues.current as Map);
+  //     cities.add(
+  //       CityModel.fromInternalJson(jsonData: json, id: iteratorKeys.current),
+  //     );
+  //   }
 
-    for (City city in cities) {
-      if (city.viewType == ViewType.weekView) {
-        res.add(city);
-      }
-    }
+  //   for (CityModel city in cities) {
+  //     if (city.viewType == ViewType.weekView) {
+  //       res.add(city);
+  //     }
+  //   }
 
-    return res;
-  }
+  //   return res;
+  // }
 
   @override
   int getCitiesForDayViewLength() {

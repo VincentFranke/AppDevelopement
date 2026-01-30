@@ -12,6 +12,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get city => 'Stadt';
 
   @override
+  String get cityWasAdded => 'Stadt wurde hinzugefügt';
+
+  @override
   String get code0 => 'Klarer Himmel';
 
   @override

@@ -27,6 +27,7 @@ dependencies:
   timezone: ^0.10.1
   dart_either: ^2.0.0
   get_it: ^9.2.0
+  fpdart: ^1.2.0
 
 dev_dependencies:
   flutter_test:

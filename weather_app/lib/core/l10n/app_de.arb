@@ -1,5 +1,6 @@
 {
   "city": "Stadt",
+  "cityWasAdded": "Stadt wurde hinzugefügt",
   "code0": "Klarer Himmel",
   "code1": "Überwiegend klar",
   "code2": "Teilweise bewölkt",

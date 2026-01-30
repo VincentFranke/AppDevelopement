@@ -10,13 +10,13 @@ class City {
   late final double? lon;
   late final ViewType? viewType;
   City({
-    required this.name,
-    required this.id,
-    required this.country,
-    required this.countryCode,
-    required this.federalState,
-    required this.lat,
-    required this.lon,
-    required this.viewType,
+    this.name,
+    this.id,
+    this.country,
+    this.countryCode,
+    this.federalState,
+    this.lat,
+    this.lon,
+    this.viewType,
   });
 }

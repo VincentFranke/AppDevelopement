@@ -6,9 +6,9 @@ import 'package:weather_app/core/common/widgets/shimmer_wrapper.dart';
 import 'package:weather_app/features/week_forecast/presentation/week_forecast_view/undetailed_day_forecast_card/undetailed_day_forecast_card_skeleton.dart';
 import 'package:weather_app/features/week_forecast/presentation/week_forecast_view/week_forecast_view.dart';
 
-class HomePageListLoading extends StatelessWidget {
+class HomePageLoadingList extends StatelessWidget {
   final WeekForecastLoading forecastState;
-  const HomePageListLoading({super.key, required this.forecastState});
+  const HomePageLoadingList({super.key, required this.forecastState});
 
   @override
   Widget build(BuildContext context) {

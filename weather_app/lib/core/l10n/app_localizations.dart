@@ -104,6 +104,12 @@ abstract class AppLocalizations {
   /// **'City'**
   String get city;
 
+  /// No description provided for @cityWasAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'City Was Added'**
+  String get cityWasAdded;
+
   /// No description provided for @code0.
   ///
   /// In en, this message translates to:

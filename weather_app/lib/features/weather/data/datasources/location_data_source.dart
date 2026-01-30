@@ -2,26 +2,28 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:weather_app/features/weather/domain/entities/city.dart';
+import 'package:weather_app/features/weather/data/models/city_model.dart';
 import 'package:weather_app/core/enums/view_type.dart';
 
 abstract interface class LocationDataSource {
-  Future<List<City>> fetchFiveCitySuggestions({
+  Future<List<CityModel>> fetchFiveCitySuggestions({
     required String currentInput,
     required ViewType viewType,
   });
 
-  Future<List<City>> fetchTwoCitysFromCoordinates({
+  Future<CityModel> fetchCityFromCoordinates({
     required double lat,
     required double lon,
   });
 }
 
-class LocationDataSourceImpl {
-  Future<List<City>> fetchFiveCitySuggestions({
+class LocationDataSourceImpl implements LocationDataSource {
+  @override
+  Future<List<CityModel>> fetchFiveCitySuggestions({
     required String currentInput,
     required ViewType viewType,
   }) async {
+    // Achtung ViewType wird auf null gesetzt
     final url = Uri.parse(
       'https://geocoding-api.open-meteo.com/v1/search?name=$currentInput&count=5&language=en&format=json',
     );
@@ -35,7 +37,7 @@ class LocationDataSourceImpl {
       }
       return List.generate(
         apiResponse['results'].length,
-        (index) => City.fromRemoteJson(
+        (index) => CityModel.fromRemoteJson(
           jsonData: apiResponse,
           index: index,
           viewType: viewType,
@@ -45,7 +47,8 @@ class LocationDataSourceImpl {
     throw HttpException("HTTP-Request failed", uri: url);
   }
 
-  Future<List<City>> fetchTwoCitysFromCoordinates({
+  @override
+  Future<CityModel> fetchCityFromCoordinates({
     required double lat,
     required double lon,
   }) async {
@@ -71,17 +74,10 @@ class LocationDataSourceImpl {
 
     final apiResponse2 = json.decode(response2.body) as Map<String, dynamic>;
 
-    return [
-      City.fromRemoteJson(
-        jsonData: apiResponse2,
-        index: 0,
-        viewType: ViewType.dayView,
-      ),
-      City.fromRemoteJson(
-        jsonData: apiResponse2,
-        index: 0,
-        viewType: ViewType.weekView,
-      ),
-    ];
+    return CityModel.fromRemoteJson(
+      jsonData: apiResponse2,
+      index: 0,
+      viewType: null,
+    );
   }
 }

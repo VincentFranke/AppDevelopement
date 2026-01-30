@@ -1,35 +1,30 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:location/location.dart';
-import 'package:weather_app/features/weather/data/datasources/gps_data_source.dart';
-import 'package:weather_app/features/weather/data/datasources/location_data_source.dart';
-import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc_events.dart';
-import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc_states.dart';
+import 'package:weather_app/core/common/blocs/app_bloc/app_bloc.dart';
+import 'package:weather_app/features/weather/domain/usecases/safe_two_cities_from_gps.dart';
+import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_events.dart';
+import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_states.dart';
 
-class GetLocationBloc
-    extends Bloc<GetLocationBlocEvents, GetLocationBlocStates> {
-  GetLocationBloc() : super(GetLocationIdleState()) {
-    on<TryGetLocationEvent>((event, emit) async {
+class GetLocationBloc extends Bloc<GetLocationEvents, GetLocationStates> {
+  final SafeTwoCitiesFromGps _safeTwoCitiesFromGps;
+  final AppBloc _appBloc;
+
+  GetLocationBloc({
+    required SafeTwoCitiesFromGps safeTwoCitiesFromGps,
+    required AppBloc appBloc,
+  }) : _safeTwoCitiesFromGps = safeTwoCitiesFromGps,
+       _appBloc = appBloc,
+       super(GetLocationInitial()) {
+    on<GetLocation>((event, emit) async {
       emit(GetLocationLoadingState());
 
-      LocationData? locationData;
-      try {
-        locationData = await tryGetLocation();
-      } on Exception catch (e) {
-        emit(GetLocationErrorState(exception: e));
-        return;
-      }
-      if (locationData == null) {
-        emit(GetLocationPermissionDeniedState());
-        return;
-      }
-      final cityEntities = await fetchCityFromCoordinates(
-        lat: locationData.latitude!,
-        lon: locationData.longitude!,
-      );
-      emit(GetLocationSuccessfullState(cityEntities: cityEntities));
-    });
-    on<ResetLocationBlocEvent>((event, emit) {
-      emit(GetLocationIdleState());
+      final response = await _safeTwoCitiesFromGps();
+
+      response.fold((l) => emit(GetLocationFailed(message: l.message)), (r) {
+        emit(GetLocationSuccess());
+        _appBloc.add(AppRefreshRequest());
+      });
+
+      emit(GetLocationInitial());
     });
   }
 }

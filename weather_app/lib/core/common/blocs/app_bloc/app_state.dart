@@ -5,4 +5,4 @@ sealed class AppState {}
 
 final class AppInitial extends AppState {}
 
-final class AppRefreshPulse extends AppState {}
+final class AppRefresh extends AppState {}

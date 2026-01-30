@@ -6,8 +6,8 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc() : super(AppInitial()) {
-    on<AppRefresh>((_, emit) {
-      emit(AppRefreshPulse());
+    on<AppRefreshRequest>((_, emit) {
+      emit(AppRefresh());
       emit(AppInitial());
     });
   }

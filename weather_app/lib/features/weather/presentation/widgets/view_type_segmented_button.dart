@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/l10n/app_localizations.dart';
 import 'package:weather_app/features/weather/presentation/blocs/current_input_bloc/current_input_bloc.dart';
-import 'package:weather_app/features/weather/presentation/blocs/current_input_bloc/current_input_bloc_events.dart';
+import 'package:weather_app/features/weather/presentation/blocs/current_input_bloc/current_input_events.dart';
 import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_bloc.dart';
-import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_bloc_events.dart';
-import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_bloc_state.dart';
+import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_events.dart';
+import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_state.dart';
 import 'package:weather_app/core/enums/view_type.dart';
 
 class ViewTypeSegmentedButton extends StatelessWidget {
@@ -21,7 +21,7 @@ class ViewTypeSegmentedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: viewTypeBloc,
-      child: BlocBuilder<ViewTypeBloc, ViewTypeBlocState>(
+      child: BlocBuilder<ViewTypeBloc, ViewTypeState>(
         builder: (context, _) => SegmentedButton(
           segments: [
             ButtonSegment(
@@ -35,11 +35,9 @@ class ViewTypeSegmentedButton extends StatelessWidget {
           ],
           selected: {viewTypeBloc.state.viewType},
           onSelectionChanged: (newViewType) {
-            viewTypeBloc.add(
-              ViewTypeChangedEvent(newViewType: newViewType.first),
-            );
+            viewTypeBloc.add(ViewTypeChanged(newViewType: newViewType.first));
             currentInputBloc.add(
-              CurrentInputChangedEvent(
+              CurrentInputChangedEvent.CurrentInputChanged(
                 currentInput: currentInputBloc.state.currentInput,
                 viewType: newViewType.first,
               ),

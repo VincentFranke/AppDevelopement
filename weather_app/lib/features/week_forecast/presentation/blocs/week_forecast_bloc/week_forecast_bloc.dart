@@ -32,8 +32,8 @@ class WeekForecastBloc extends Bloc<WeekForecastEvent, WeekForecastState> {
       );
     });
     on<WeekForecastAddCity>((event, emit) async {
-      final viewAlreadyExists = await hiveCityDatabaseService.addCity(
-        name: event.cityEntity.name!,
+      final viewAlreadyExists = await hiveCityDatabaseService.saveCity(
+        id: event.cityEntity.name!,
         json: event.cityEntity.toInternalJson(),
       );
       emit(
@@ -45,12 +45,12 @@ class WeekForecastBloc extends Bloc<WeekForecastEvent, WeekForecastState> {
       );
     });
     on<WeekForecastAddMultipleCitys>((event, emit) async {
-      final viewAlreadyExistsDayView = await hiveCityDatabaseService.addCity(
-        name: event.citysAndViewTypes.keys.first.name!,
+      final viewAlreadyExistsDayView = await hiveCityDatabaseService.saveCity(
+        id: event.citysAndViewTypes.keys.first.name!,
         json: event.citysAndViewTypes.entries.first.key.toInternalJson(),
       );
-      final viewAlreadyExistsWeekView = await hiveCityDatabaseService.addCity(
-        name: event.citysAndViewTypes.keys.last.name!,
+      final viewAlreadyExistsWeekView = await hiveCityDatabaseService.saveCity(
+        id: event.citysAndViewTypes.keys.last.name!,
         json: event.citysAndViewTypes.entries.last.key.toInternalJson(),
       );
       final bothViewsAlreadyExist =
@@ -67,7 +67,7 @@ class WeekForecastBloc extends Bloc<WeekForecastEvent, WeekForecastState> {
   }
 
   Future<List<WeekForecastEntity>> _getCurrentWeekForecastData() async {
-    final List<City> citys = hiveCityDatabaseService.getAllCitys();
+    final List<City> citys = hiveCityDatabaseService.getAllCities();
     final List<City> citiesDesignatedForWeekView = [];
 
     for (City city in citys) {

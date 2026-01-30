@@ -7,16 +7,16 @@ import 'package:weather_app/features/week_forecast/presentation/blocs/week_forec
 import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_event.dart';
 import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_state.dart';
 import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc.dart';
-import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc_events.dart';
-import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc_states.dart';
+import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_events.dart';
+import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_states.dart';
 import 'package:weather_app/core/common/blocs/settings_bloc/settings_bloc.dart';
 import 'package:weather_app/core/common/blocs/settings_bloc/settings_event.dart';
 import 'package:weather_app/core/common/blocs/settings_bloc/settings_bloc_states.dart';
 import 'package:weather_app/features/weather/presentation/blocs/view_type_bloc/view_type_bloc.dart';
 import 'package:weather_app/core/configs/city_suggestion_card_layout_config.dart';
-import 'package:weather_app/features/weather/presentation/add_city_page/add_city_page.dart';
-import 'package:weather_app/features/weather/presentation/home_page_list.dart';
-import 'package:weather_app/features/weather/presentation/home_page_list_loading.dart';
+import 'package:weather_app/features/weather/presentation/pages/add_city_page.dart';
+import 'package:weather_app/features/weather/presentation/widgets/home_page_list.dart';
+import 'package:weather_app/features/weather/presentation/widgets/home_page_loading_list.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
             iconSize: 40,
             icon: Icon(CupertinoIcons.location_circle),
             onPressed: () {
-              getLocationBloc.add(TryGetLocationEvent());
+              getLocationBloc.add(GetLocation());
             },
           ),
           IconButton(
@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
               } else if (forecastState is WeekForecastError) {
                 return Center(child: Text(AppLocalizations.of(context)!.error));
               } else if (forecastState is WeekForecastLoading) {
-                return HomePageListLoading(forecastState: forecastState);
+                return HomePageLoadingList(forecastState: forecastState);
               } else if (forecastState is WeekForecastSuccess) {
                 return Builder(
                   builder: (context) {
@@ -104,7 +104,7 @@ class HomePage extends StatelessWidget {
                       builder: (context, settingsState) {
                         if (settingsState is IsFirstRunSaved) {
                           if (settingsState.isFirstRun) {
-                            getLocationBloc.add(TryGetLocationEvent());
+                            getLocationBloc.add(GetLocation());
                             //getLocationBloc.add(ResetLocationBlocEvent());
                           }
                           settingsBloc.add(
@@ -113,12 +113,9 @@ class HomePage extends StatelessWidget {
                           );
                         }
                         // Anzeigen von Daten
-                        return BlocBuilder<
-                          GetLocationBloc,
-                          GetLocationBlocStates
-                        >(
+                        return BlocBuilder<GetLocationBloc, GetLocationStates>(
                           builder: (context, getLocationState) {
-                            if (getLocationState is GetLocationIdleState) {
+                            if (getLocationState is GetLocationInitial) {
                               return HomePageList(
                                 forecastBloc: forecastBloc,
                                 forecastState: forecastState,
@@ -170,8 +167,7 @@ class HomePage extends StatelessWidget {
                                 forecastBloc: forecastBloc,
                                 forecastState: forecastState,
                               );
-                            } else if (getLocationState
-                                is GetLocationErrorState) {
+                            } else if (getLocationState is GetLocationFailed) {
                               getLocationBloc.add(ResetLocationBlocEvent());
                               WidgetsBinding.instance.addPostFrameCallback((
                                 timeStamp,
@@ -189,19 +185,14 @@ class HomePage extends StatelessWidget {
                               return Center(
                                 child: CircularProgressIndicator.adaptive(),
                               );
-                            } else if (getLocationState
-                                is GetLocationSuccessfullState) {
+                            } else if (getLocationState is GetLocationSuccess) {
                               forecastBloc.add(
                                 WeekForecastAddMultipleCitys(
                                   citysAndViewTypes: {
-                                    getLocationState.cityEntities[0]:
-                                        getLocationState
-                                            .cityEntities[0]
-                                            .viewType!,
-                                    getLocationState.cityEntities[1]:
-                                        getLocationState
-                                            .cityEntities[1]
-                                            .viewType!,
+                                    getLocationState.cities[0]:
+                                        getLocationState.cities[0].viewType!,
+                                    getLocationState.cities[1]:
+                                        getLocationState.cities[1].viewType!,
                                   },
                                 ),
                               );
