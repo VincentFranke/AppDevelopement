@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/l10n/app_localizations.dart';
 import 'package:weather_app/features/weather/presentation/blocs/current_input_bloc/current_input_bloc.dart';
 import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_bloc.dart';
-import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_event.dart';
-import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_state.dart';
+import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_events.dart';
+import 'package:weather_app/features/week_forecast/presentation/blocs/week_forecast_bloc/week_forecast_states.dart';
 import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_bloc.dart';
 import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_events.dart';
 import 'package:weather_app/features/weather/presentation/blocs/get_location_bloc/get_location_states.dart';
@@ -68,7 +68,7 @@ class HomePage extends StatelessWidget {
           onRefresh: () async {
             forecastBloc.add(WeekForecastRefresh());
           },
-          child: BlocBuilder<WeekForecastBloc, WeekForecastState>(
+          child: BlocBuilder<WeekForecastBloc, WeekForecastStates>(
             builder: (context, forecastState) {
               bool snackbarTriggered = false;
 

@@ -4,7 +4,7 @@ import 'package:weather_app/features/week_forecast/domain/entities/undetailed_da
 import 'package:weather_app/core/utils/mapper.dart';
 
 class UndetailedDayForecastCardBody extends StatelessWidget {
-  final UndetailedDayForecastEntity undetailedDayForecastEntity;
+  final UndetailedDayForecast undetailedDayForecastEntity;
   const UndetailedDayForecastCardBody({
     super.key,
     required this.undetailedDayForecastEntity,

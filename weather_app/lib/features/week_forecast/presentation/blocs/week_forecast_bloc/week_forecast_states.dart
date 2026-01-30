@@ -1,11 +1,11 @@
 import 'package:weather_app/features/day_forecast/domain/entities/day_forecast.dart';
-import 'package:weather_app/core/common/entities/week_forecast_entity.dart';
+import 'package:weather_app/features/week_forecast/domain/entities/week_forecast.dart';
 
-abstract class WeekForecastState {}
+abstract class WeekForecastStates {}
 
-class WeekForecastSuccess extends WeekForecastState {
+class WeekForecastSuccess extends WeekForecastStates {
   final bool bothViewsAlreadyExist;
-  final List<WeekForecastEntity> weekForecastEntityList;
+  final List<WeekForecast> weekForecastEntityList;
   final List<DayForecast> dayForecastEntityList;
   WeekForecastSuccess({
     required this.bothViewsAlreadyExist,
@@ -14,7 +14,7 @@ class WeekForecastSuccess extends WeekForecastState {
   });
 }
 
-class WeekForecastLoading extends WeekForecastState {
+class WeekForecastLoading extends WeekForecastStates {
   final int numberOfCitiesDesignatedForDayView;
   final int numberOfCitiesDesignatedForWeekView;
   WeekForecastLoading({
@@ -23,6 +23,6 @@ class WeekForecastLoading extends WeekForecastState {
   });
 }
 
-class WeekForecastPreLoading extends WeekForecastState {}
+class WeekForecastPreLoading extends WeekForecastStates {}
 
-class WeekForecastError extends WeekForecastState {}
+class WeekForecastError extends WeekForecastStates {}

@@ -4,12 +4,12 @@ import 'package:location/location.dart';
 import 'package:weather_app/core/error/exceptions.dart';
 
 abstract interface class GpsDataSource {
-  Future<LocationData> tryGetLocation();
+  Future<LocationData> tryFetchLocation();
 }
 
 class GpsDataSourceImpl implements GpsDataSource {
   @override
-  Future<LocationData> tryGetLocation() async {
+  Future<LocationData> tryFetchLocation() async {
     final location = Location();
 
     // Sicherstellen, dass Service an ist
