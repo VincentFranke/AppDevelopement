@@ -1,24 +1,48 @@
-import 'package:dart_either/dart_either.dart';
+import 'package:fpdart/fpdart.dart';
+import 'package:weather_app/core/error/exceptions.dart';
 import 'package:weather_app/core/error/failure.dart';
+import 'package:weather_app/features/day_forecast/data/datasources/day_forecast_remote_datasource.dart';
 import 'package:weather_app/features/day_forecast/domain/entities/day_forecast.dart';
 import 'package:weather_app/features/day_forecast/domain/repository/day_forecast_repository.dart';
+import 'package:weather_app/features/weather/domain/entities/city.dart';
 
-class DayForecastRepositoryImpl implements DayForecastRepository{
-  final DayForecastRemote
+class DayForecastRepositoryImpl implements DayForecastRepository {
+  final DayForecastRemoteDatasource dayForecastRemoteDatasource;
+
+  DayForecastRepositoryImpl({required this.dayForecastRemoteDatasource});
+
   @override
-  Future<Either<List<DayForecast>, Failure>> getDayForecast() {
-      List<DayForecast> result = [];
+  Future<Either<Failure, DayForecast>> getDayForecast({
+    required City city,
+  }) async {
+    try {
+      final hourlyForecastList = await dayForecastRemoteDatasource
+          .fetchHourlyForecastList(
+            name: city.name!,
+            lat: city.lat!,
+            lon: city.lon!,
+          );
 
-  for (int i = 0; i < names.length; i++) {
-    result.add(
-      await fetchDayForecastEntity(
-        id: ids[i],
-        name: names[i],
-        lat: lats[i],
-        lon: lons[i],
-      ),
-    );
-  }
-  }
+      final dayForecastRemote = await dayForecastRemoteDatasource
+          .fetchDayForecastRemote(
+            id: city.id!,
+            name: city.name!,
+            lat: city.lat!,
+            lon: city.lon!,
+          );
 
+      return right(
+        DayForecast(
+          id: city.id!,
+          name: city.name!,
+          sunrise: dayForecastRemote.sunrise,
+          sunset: dayForecastRemote.sunset,
+          timeZone: dayForecastRemote.timeZone,
+          hourlyForecastList: hourlyForecastList,
+        ),
+      );
+    } on DataSourceException catch (e) {
+      return left(Failure(message: e.message));
+    }
+  }
 }

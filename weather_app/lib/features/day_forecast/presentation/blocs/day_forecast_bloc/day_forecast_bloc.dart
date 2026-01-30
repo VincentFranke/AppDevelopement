@@ -1,35 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/features/weather/data/datasources/hive_city_data_source.dart';
+import 'package:weather_app/features/day_forecast/domain/usecases/get_day_forecast.dart';
 import 'package:weather_app/features/day_forecast/presentation/blocs/day_forecast_bloc/day_forecast_event.dart';
 import 'package:weather_app/features/day_forecast/presentation/blocs/day_forecast_bloc/day_forecast_state.dart';
 
 class DayForecastBloc extends Bloc<DayForecastEvent, DayForecastState> {
-  final HiveCityDataSourceImpl _hiveCityDatabaseService;
+  final GetDayForecast _getDayForecast;
 
-  DayForecastBloc({required HiveCityDataSourceImpl hiveCityDatabaseService})
-    : _hiveCityDatabaseService = hiveCityDatabaseService,
-      super(DayForecastPreLoading()) {
-    on<DayForecastEvent>(
-      (event, emit) => emit(
-        DayForecastLoading(
-          citiesForDayViewLength: _hiveCityDatabaseService
-              .getCitiesForDayViewLength(),
-        ),
-      ),
-    );
+  DayForecastBloc({required GetDayForecast getDayForecast})
+    : _getDayForecast = getDayForecast,
+      super(DayForecastLoading()) {
+    on<DayForecastRequestRefresh>((event, emit) async {
+      emit(DayForecastLoading());
 
-    on<DayForecastRefresh>((event, emit) async {
-      final citiesForDayView = _hiveCityDatabaseService.getAllCitysDayView();
+      final response = await _getDayForecast(city: event.city);
 
-      emit(
-        DayForecastSuccess(
-          dayForecastEntityList: await fetchDayForecastList(
-            ids: citiesForDayView.map((c) => c.id!).toList(),
-            names: citiesForDayView.map((c) => c.name!).toList(),
-            lats: citiesForDayView.map((c) => c.lat!).toList(),
-            lons: citiesForDayView.map((c) => c.lon!).toList(),
-          ),
-        ),
+      response.fold(
+        (l) => emit(DayForecastError(message: l.message)),
+        (r) => emit(DayForecastSuccess(dayForecast: r)),
       );
     });
   }

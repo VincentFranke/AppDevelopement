@@ -2,16 +2,16 @@ import 'package:weather_app/features/day_forecast/domain/entities/day_forecast.d
 
 abstract class DayForecastState {}
 
+class DayForecastLoading extends DayForecastState {}
+
 class DayForecastSuccess extends DayForecastState {
-  final List<DayForecast> dayForecastEntityList;
+  final DayForecast dayForecast;
 
-  DayForecastSuccess({required this.dayForecastEntityList});
+  DayForecastSuccess({required this.dayForecast});
 }
 
-class DayForecastLoading extends DayForecastState {
-  final int citiesForDayViewLength;
+class DayForecastError extends DayForecastState {
+  final String message;
 
-  DayForecastLoading({required this.citiesForDayViewLength});
+  DayForecastError({required this.message});
 }
-
-class DayForecastPreLoading extends DayForecastState {}

@@ -1,17 +1,20 @@
-class HourlyForecastModel {
-  late final DateTime time;
-  final double temperature;
-  final int weatherCode;
+import 'package:weather_app/features/day_forecast/domain/entities/hourly_forecast.dart';
+
+class HourlyForecastModel extends HourlyForecast {
   HourlyForecastModel({
-    required this.time,
-    required this.temperature,
-    required this.weatherCode,
+    required super.time,
+    required super.temperature,
+    required super.weatherCode,
   });
 
-  HourlyForecastModel.fromJson({
+  factory HourlyForecastModel.fromJson({
     required Map<String, dynamic> jsonData,
     required int index,
-  }) : temperature = jsonData['hourly']['temperature_2m'][index],
-       weatherCode = jsonData['hourly']['weather_code'][index],
-       time = DateTime.parse(jsonData['hourly']['time'][index]);
+  }) {
+    return HourlyForecastModel(
+      temperature: jsonData['hourly']['temperature_2m'][index],
+      weatherCode: jsonData['hourly']['weather_code'][index],
+      time: DateTime.parse(jsonData['hourly']['time'][index]),
+    );
+  }
 }
